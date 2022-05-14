@@ -7,19 +7,19 @@ import Service from './Service';
 const Services = () => {
     const services = [
         {
-            id_: 1,
+            _id: 1,
             name: "Fluoride Treatment",
             description: "Fluoride treatments are typically professional treatments containing .",
             img: fluoride,
         },
         {
-            id_: 2,
+            _id: 2,
             name: "Cavity Filling",
             description: "A cavity filling is when the dentist fills the opening in your tooth .",
             img: cavity,
         },
         {
-            id_: 3,
+            _id: 3,
             name: "Teeth Whitening",
             description: "Best Teeth Whitening At LASER DENTAL In Uttara. We Utilise World's .",
             img: teeth,

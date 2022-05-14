@@ -12,10 +12,16 @@ const Content = () => {
             <div className='py-16 text-center'>
                 <h2 className='text-secondary text-xl font-bold'>Contact Us</h2>
                 <h2 className='text-4xl text-white'>Stay connected with us</h2>
-                <form className='w-3/12 mx-auto pt-7'>
-                    <input type="text" placeholder="Email Address" className="input input-bordered lg:w-full max-w-xs block" />
-                    <input type="text" placeholder="Subject" className="input input-bordered lg:w-full max-w-xs block my-5" />
-                    <textarea className="textarea textarea-bordered block lg:w-full max-w-xs h-28  mb-9" placeholder="Your message"></textarea>
+                <form className='pt-7'>
+                    <div className=''>
+                        <input type="text" placeholder="Email Address" className="input input-bordered w-9/12 max-w-md" />
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Subject" className="input input-bordered w-9/12 max-w-md my-5" />
+                    </div>
+                    <div>
+                        <textarea className="textarea textarea-bordered w-9/12 max-w-md h-28  mb-9" placeholder="Your message"></textarea>
+                    </div>
                     <PrimaryButton>Submit</PrimaryButton>
                 </form>
             </div>
