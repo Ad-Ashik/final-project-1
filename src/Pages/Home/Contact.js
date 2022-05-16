@@ -13,7 +13,7 @@ const Content = () => {
                 <h2 className='text-secondary text-xl font-bold'>Contact Us</h2>
                 <h2 className='text-4xl text-white'>Stay connected with us</h2>
                 <form className='pt-7'>
-                    <div className=''>
+                    <div>
                         <input type="text" placeholder="Email Address" className="input input-bordered w-9/12 max-w-md" />
                     </div>
                     <div>
