@@ -29,7 +29,7 @@ const Navbar = () => {
         </li>
         <li>
             {
-                user ? <Link to="/" onClick={logOut}>Sing Out</Link> : <Link to="/login">Login</Link>
+                user ? <Link to="/login" onClick={logOut}>Sing Out</Link> : <Link to="/login">Login</Link>
             }
 
         </li>
