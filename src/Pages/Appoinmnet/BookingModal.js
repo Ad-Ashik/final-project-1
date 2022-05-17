@@ -19,8 +19,10 @@ const BookingModal = ({ date, appointment, setAppointment }) => {
                     <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="font-bold text-3xl text-secondary mb-12">{name}</h3>
                     <form onSubmit={BookingForm} className='grid grid-cols-1 gap-5'>
-                        <input type="text" disabled value={format(date, 'PP')} className="input input-bordered w-full max-w-full" />
+                        <input type="text" disabled value={date && format(date, 'PP')} className="input input-bordered w-full max-w-full" />
                         <select name='slot' className="select select-bordered w-full max-w-full">
+                            {/* make loding code*/
+                                /* !slots ? <div>loding</div> : */}
                             {
                                 slots.map(slot => <option key={slot._id} value={slot}>{slot}</option>)
                             }
