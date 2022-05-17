@@ -15,7 +15,7 @@ const service = ({ service, setAppointment }) => {
                 </p>
                 <p><small>{slots.length} {slots.length > 1 ? 'SPACES' : 'SPACE'} AVAILABLE</small></p>
                 <div className="card-actions justify-center">
-                    <label for="booking-modal" onClick={() => setAppointment(service)} disabled={slots.length === 0} className="btn btn-primary bg-gradient-to-r from-secondary to-primary text-white">
+                    <label htmlFor="booking-modal" onClick={() => setAppointment(service)} disabled={slots.length === 0} className="btn btn-primary bg-gradient-to-r from-secondary to-primary text-white">
                         Book Appointment
                     </label>
                 </div>

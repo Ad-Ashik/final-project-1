@@ -16,7 +16,7 @@ const BookingModal = ({ date, appointment, setAppointment }) => {
             <input type="checkbox" id="booking-modal" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
-                    <label for="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="font-bold text-3xl text-secondary mb-12">{name}</h3>
                     <form onSubmit={BookingForm} className='grid grid-cols-1 gap-5'>
                         <input type="text" disabled value={format(date, 'PP')} className="input input-bordered w-full max-w-full" />

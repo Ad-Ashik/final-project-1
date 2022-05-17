@@ -1,19 +1,20 @@
+import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import BookingModal from './BookingModal';
 import Service from './Service';
 
-const AvailableAppointment = ({ date, showDate }) => {
+const AvailableAppointment = ({ date }) => {
     const [services, setServices] = useState([]);
     const [appointment, setAppointment] = useState(null);
 
     useEffect(() => {
-        fetch('services.json')
+        fetch('http://localhost:1111/appointment')
             .then(res => res.json())
             .then(data => setServices(data))
     }, [])
     return (
         <div>
-            <p className='mt-8 text-secondary flex justify-center lg:text-xl'>Available Appointments on-  {showDate}</p>
+            <p className='mt-8 text-secondary flex justify-center lg:text-xl'>Available Appointments on -  {format(date, 'PP')}</p>
             <div className='grid gap-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 lg:mt-24 lg:mb-32 my-10'>
                 {
                     services.map(service => <Service
