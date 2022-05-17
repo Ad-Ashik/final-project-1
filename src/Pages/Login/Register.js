@@ -1,46 +1,69 @@
 import React from 'react';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Register = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const navigate = useNavigate();
     const [
-        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
         user,
         loading,
         error,
-    ] = useSignInWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth);
+
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
     if (gUser || user) {
         console.log(gUser, user)
     }
 
     let singInError;
-    if (error || gError) {
-        singInError = <p className='text-red-500 text-center pb-2'>{error?.message || gError?.message}</p>
+    if (error || gError || updateError) {
+        singInError = <p className='text-red-500 text-center pb-2'>{error?.message || gError?.message || updateError?.message}</p>
     }
 
-    const onSubmit = data => {
+    const onSubmit = async data => {
         console.log(data);
-        signInWithEmailAndPassword(data.email, data.password)
+        await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({ displayName: data.name });
+        console.log('displayName is update');
+        navigate('/appointment')
     }
-
     return (
         <>
             <div className='flex justify-center '>
                 {
-                    (loading || gLoading) && <Loading></Loading>
+                    (loading || gLoading || updating) && <Loading></Loading>
                 }
             </div>
             <div className='flex justify-center items-center h-screen'>
                 <div className="card w-96 bg-base-100 shadow-xl">
                     <div className="card-body">
-                        <h2 className="card-title block text-center">Login</h2>
+                        <h2 className="card-title block text-center">SignUp</h2>
                         <form onSubmit={handleSubmit(onSubmit)}>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text">Name</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    className="input input-bordered w-full max-w-xs"
+                                    {...register("name", {
+                                        required: {
+                                            value: true,
+                                            message: "Name is Required"
+                                        }
+                                    })}
+                                />
+                                <label className="label">
+                                    {errors.name?.type === 'required' && <span className="label-text-alt text-red-500">{errors.name?.message}</span>}
+                                </label>
+                            </div>
                             <div className="form-control w-full max-w-xs">
                                 <label className="label">
                                     <span className="label-text">Email</span>
@@ -88,13 +111,10 @@ const Login = () => {
                                 </label>
                             </div>
 
-
-                            <p className='pb-3 pl-2 cursor-pointer'><small>Forgot Password ?</small></p>
-
                             {singInError}
 
-                            <input className='btn w-full max-w-xs' type="submit" value="LOGIN" />
-                            <p className='pt-3 text-center'><small>New to Doctors Portal? <Link className='text-secondary' to="/register">Create new account</Link></small></p>
+                            <input className='btn w-full max-w-xs' type="submit" value="SING UP" />
+                            <p className='pt-3 text-center'><small>Already have an account? <Link className='text-secondary' to="/login">Please login</Link></small></p>
                         </form>
                         <div className="divider">or</div>
                         <button
@@ -108,4 +128,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
