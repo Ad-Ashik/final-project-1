@@ -1,14 +1,57 @@
 import React from 'react';
 import { format } from 'date-fns';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+import { toast } from 'react-toastify';
 
-const BookingModal = ({ date, appointment, setAppointment }) => {
+const BookingModal = ({ date, appointment, setAppointment, refetch }) => {
     const { _id, name, slots } = appointment;
+    const [user] = useAuthState(auth);
+
+    const formaDate = format(date, 'PP');
 
     const BookingForm = e => {
         e.preventDefault();
         const slot = e.target.slot.value;
-        setAppointment(null);
-        console.log(_id, name, slot)
+
+        console.log(_id, name, slot);
+
+        const booking = {
+            appointmentId: _id,
+            appointmentName: name,
+            date: formaDate,
+            slot,
+            patientName: user.displayName,
+            patientEmail: user.email,
+            phone: e.target.phone.value
+        }
+
+        fetch('http://localhost:1111/booking', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(booking),
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.success) {
+                    toast.success(`Appointment set "${slot}"`, {
+                        position: toast.POSITION.TOP_CENTER
+                    });
+                }
+                else {
+                    toast.error(`"${data.booking?.date}" Already have an appointment "${data.booking?.slot}"`, {
+                        position: toast.POSITION.TOP_CENTER
+                    });
+                }
+                refetch();
+                setAppointment(null);
+            })
+
+
+
     }
 
     return (
@@ -24,12 +67,15 @@ const BookingModal = ({ date, appointment, setAppointment }) => {
                             {/* make loding code*/
                                 /* !slots ? <div>loding</div> : */}
                             {
-                                slots.map(slot => <option key={slot._id} value={slot}>{slot}</option>)
+                                slots.map((slot, index) => <option
+                                    key={index}
+                                    value={slot}
+                                >{slot}</option>)
                             }
                         </select>
-                        <input type="text" name='name' placeholder="Full Name" className="input input-bordered w-full max-w-full" />
+                        <input type="text" value={user?.displayName || ''} name='name' placeholder="Full Name" className="input input-bordered w-full max-w-full" disabled />
+                        <input type="email" value={user?.email || ''} name='email' placeholder="Email" className="input input-bordered w-full max-w-full" disabled />
                         <input type="text" name='phone' placeholder="Phone Number" className="input input-bordered w-full max-w-full" />
-                        <input type="email" name='email' placeholder="Email" className="input input-bordered w-full max-w-full" />
                         <input type="submit" value="Submit" className="btn btn-secondary w-full max-w-full" />
                     </form>
                 </div>
