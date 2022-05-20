@@ -1,12 +1,11 @@
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import Loading from '../Shared/Loading';
 import BookingModal from './BookingModal';
 import Service from './Service';
 
 const AvailableAppointment = ({ date }) => {
-    // const [services, setServices] = useState([]);
     const [appointment, setAppointment] = useState(null);
 
     const formaDate = format(date, 'PP');
