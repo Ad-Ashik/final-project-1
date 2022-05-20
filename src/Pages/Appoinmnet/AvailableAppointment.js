@@ -11,7 +11,7 @@ const AvailableAppointment = ({ date }) => {
     const formaDate = format(date, 'PP');
 
     const { data: services, isLoading, refetch } = useQuery(['available', formaDate], () =>
-        fetch(`http://localhost:1111/available?date=${formaDate}`)
+        fetch(`https://damp-springs-94125.herokuapp.com/available?date=${formaDate}`)
             .then(res => res.json())
     )
     if (isLoading) {

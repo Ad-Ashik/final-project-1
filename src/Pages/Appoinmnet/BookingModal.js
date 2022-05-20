@@ -26,7 +26,7 @@ const BookingModal = ({ date, appointment, setAppointment, refetch }) => {
             phone: e.target.phone.value
         }
 
-        fetch('http://localhost:1111/booking', {
+        fetch('https://damp-springs-94125.herokuapp.com/booking', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

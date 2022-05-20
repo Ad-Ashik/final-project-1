@@ -11,7 +11,7 @@ const MyAppointments = () => {
 
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:1111/booking?patientEmail=${user.email}`, {
+            fetch(`https://damp-springs-94125.herokuapp.com/booking?patientEmail=${user.email}`, {
                 method: 'GET',
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('accessToken')}`
